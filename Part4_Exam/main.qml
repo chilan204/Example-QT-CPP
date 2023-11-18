@@ -7,81 +7,87 @@ Window {
     height: 480
     title: qsTr("BT_1_NCL")
 
+    property bool isPlay: false
+
     Rectangle {
-        id: khung
+        id: box
         width: 600
         height: 360
+        anchors.centerIn: parent
         color: "lavender"
         border.color: "blue"
         border.width: 1
     }
 
+    Image {
+        id: img
+        width: 400
+        height: 180
+        anchors.horizontalCenter: box.horizontalCenter
+        anchors.top: box.top
+        anchors.topMargin: 40
+        source: "qrc:/img/img1.png"
+    }
+
     Rectangle {
-        id: tgian
-        x: 60
-        y: 250
+        id: duration
         width: 480
         height: 5
+        anchors.horizontalCenter: box.horizontalCenter
+        anchors.top: img.bottom
+        anchors.topMargin: 20
+        radius: 5
         color: "cyan"
         border.color: "blue"
         border.width: 1
     }
 
-    Rectangle {
-        id: hinhanh
-        x: 100
-        y: 50
-        width: 400
-        height: 180
-        color: "white"
-        border.color: "blue"
-        Image {
-            id: img1
-            source: "qrc:/img/img1.png"
-            anchors.fill: hinhanh
-        }
-    }
-
     Image {
-        id: img_play
-        x: 275
-        y: 275
-        source: "qrc:/img/img_play.png"
+        id: playButton
+        anchors.horizontalCenter: box.horizontalCenter
+        anchors.top: duration.bottom
+        anchors.topMargin: 30
+        source: playButton.sourceImg()
         sourceSize.width: 50
         sourceSize.height: 50
         MouseArea {
-            anchors.fill: img_play
+            anchors.fill: parent
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
-                img_play.source = (img_play.source == "qrc:/img/img_play.png" ? "qrc:/img/img_pause.png" : "qrc:/img/img_play.png")
+                isPlay = !isPlay
             }
+        }
+        function sourceImg(){
+            return "qrc:/img/" + (isPlay ? "img_play.png" : "img_pause.png")
         }
     }
 
     Image {
-        id: img_next
-        x: 375
-        y: 275
+        id: nextButton
+        anchors.top: playButton.top
+        anchors.left: playButton.right
+        anchors.leftMargin: 50
         source: "qrc:/img/img_next.png"
         sourceSize.width: 50
         sourceSize.height: 50
         MouseArea {
-            anchors.fill: img_next
+            anchors.fill: parent
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
         }
     }
 
     Image {
-        id: img_previous
-        x: 175
-        y: 275
+        id: preButton
+        anchors.top: playButton.top
+        anchors.right: playButton.left
+        anchors.rightMargin: 50
         source: "qrc:/img/img_previous.png"
         sourceSize.width: 50
         sourceSize.height: 50
         MouseArea {
-            anchors.fill: img_previous
+            anchors.fill: parent
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
         }
