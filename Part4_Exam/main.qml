@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 
 Window {
+    id: root
     visible: true
     width: 720
     height: 480
@@ -93,25 +94,34 @@ Window {
         }
     }
 
-    Menu {
-        visible: true
+    ListMusic {
+        id: listMusic
+        anchors {
+            top: box.top
+            topMargin: 10
+            right: box.right
+            rightMargin: 10
+        }
+        visible: false
     }
 
     Image {
         id: listButton
-        anchors.top: box.top
-        anchors.topMargin: 25
-        anchors.right: box.right
-        anchors.rightMargin: 25
+        width: 25
+        height: 25
+        anchors {
+            top: box.top
+            topMargin: 25
+            right: box.right
+            rightMargin: 25
+        }
         source: "qrc:/img/img_list.png"
-        sourceSize.width: 25
-        sourceSize.height: 25
         MouseArea {
             anchors.fill: parent
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
-
+                listMusic.visible = !listMusic.visible
             }
         }
     }

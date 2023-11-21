@@ -7,8 +7,8 @@
         <file>img/img_play.png</file>
         <file>img/img_previous.png</file>
         <file>img/img_list.png</file>
-        <file>Menu.qml</file>
+        <file>ListMusic.qml</file>
         <file>img/icon_music.png</file>
-        <file>List_of_Music.qml</file>
+        <file>ItemMusic.qml</file>
     </qresource>
 </RCC>
