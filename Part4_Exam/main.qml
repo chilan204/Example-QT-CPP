@@ -92,4 +92,27 @@ Window {
             onReleased: parent.scale = 1
         }
     }
+
+    Menu {
+        visible: true
+    }
+
+    Image {
+        id: listButton
+        anchors.top: box.top
+        anchors.topMargin: 25
+        anchors.right: box.right
+        anchors.rightMargin: 25
+        source: "qrc:/img/img_list.png"
+        sourceSize.width: 25
+        sourceSize.height: 25
+        MouseArea {
+            anchors.fill: parent
+            onPressed: parent.scale = 0.7
+            onReleased: parent.scale = 1
+            onClicked: {
+
+            }
+        }
+    }
 }
