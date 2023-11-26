@@ -2,106 +2,77 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 
 Window {
+    id: root
     visible: true
-    width: 640
-    height: 480
+    width: 720
+    height: 640
     title: qsTr("Hello World")
 
-    Rectangle {
+    property int durAni: 60*60*1000 / 20
+
+    Image {
         id: circleShape
-        color: "teal"
-        width: 400
-        height: 400
-        radius: 200
         anchors.centerIn: parent
-        focus: true
-
-        Rectangle {
-            id: centerCirle
-            color: "white"
-            z: 1
-            width: 20
-            height: 20
-            radius: 20
-            anchors.centerIn: parent
-
-        }
-
-        Rectangle {
-            id: minuteHand
-            color: "yellow"
-            width: 10
-            height: 175
-            border.color: "black"
-            border.width: 1
-            radius: 10
-            anchors.horizontalCenter: circleShape.horizontalCenter
-            anchors.bottom: circleShape.verticalCenter
-            transformOrigin: Item.Bottom
-            rotation: 0
-
-            RotationAnimation {
-                id: minuteAni
-                target: minuteHand
-                loops: Animation.Infinite
-                from: minuteHand.rotation
-                to: minuteHand.rotation + 360
-                direction: RotationAnimation.Clockwise
-                duration: 6000
-                running: false
-            }
-        }
-
-        Rectangle {
-            id: hourHand
-            color: "red"
-            width: 15
-            height: 100
-            border.color: "black"
-            border.width: 1
-            radius: 15
-            anchors.horizontalCenter: circleShape.horizontalCenter
-            anchors.bottom: circleShape.verticalCenter
-            transformOrigin: Item.Bottom
-            rotation: 0
-
-            RotationAnimation {
-                id: hourAni
-                target: hourHand
-                loops: Animation.Infinite
-                from: hourHand.rotation
-                to: hourHand.rotation + 360
-                direction: RotationAnimation.Clockwise
-                duration: 32000
-                running: false
-            }
-        }
-
-//        Keys.onUpPressed: {
-//            hourAni.start()
-//            minuteAni.start()
-//        }
-
-//        Keys.onDownPressed: {
-//            hourAni.pause()
-//            minuteAni.pause()
-//        }
+        source: "qrc:/clock_bg.png"
     }
 
     Rectangle {
-        id: control
-        color: "green"
-        width: 50
-        height: 50
+        id: minuteHand
+        color: "yellow"
+        width: 10
+        height: 175
+        border.color: "black"
+        border.width: 1
+        radius: 10
+        anchors.horizontalCenter: circleShape.horizontalCenter
+        anchors.bottom: circleShape.verticalCenter
+        transformOrigin: Item.Bottom
+        rotation: 0
+    }
 
-        MouseArea {
-            anchors.fill: parent
-            onPressed: parent.scale = 0.7
-            onReleased: parent.scale = 1
-            onClicked: {
-                minuteAni.running = !minuteAni.running
-                hourAni.running = !hourAni.running
-            }
+    Rectangle {
+        id: hourHand
+        color: "red"
+        width: 15
+        height: 100
+        border.color: "black"
+        border.width: 1
+        radius: 15
+        anchors.horizontalCenter: circleShape.horizontalCenter
+        anchors.bottom: circleShape.verticalCenter
+        transformOrigin: Item.Bottom
+        rotation: 0
+        focus: true
+        Keys.onReturnPressed: {
+            clockAnimation.running = !clockAnimation.running
+        }
+    }
+
+
+    Rectangle {
+        id: centerCirle
+        color: "green"
+        width: 20
+        height: 20
+        radius: 20
+        anchors.centerIn: parent
+    }
+
+    ParallelAnimation {
+        id: clockAnimation
+        loops: Animation.Infinite
+        running: false
+        RotationAnimation {
+            target: minuteHand
+            to: minuteHand.rotation + 360*60
+            direction: RotationAnimation.Clockwise
+            duration: root.durAni
+        }
+        RotationAnimation {
+            target: hourHand
+            to: hourHand.rotation + 360
+            direction: RotationAnimation.Clockwise
+            duration: root.durAni
         }
     }
 }
