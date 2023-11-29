@@ -10,5 +10,7 @@
         <file>ListMusic.qml</file>
         <file>img/icon_music.png</file>
         <file>ItemMusic.qml</file>
+        <file>InfoMusic.qml</file>
+        <file>PlayMusic.qml</file>
     </qresource>
 </RCC>
