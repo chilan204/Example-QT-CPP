@@ -2,8 +2,8 @@ import QtQuick 2.0
 
 Item {
     id: root
-    width: 300
-    height: 300
+    width: 420
+    height: 480
     clip: true
 
     property var listMs: [
@@ -19,7 +19,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: "#fff"
+        color: "lavender"
         border.color: "blue"
         border.width: 1
         opacity: 0.9
@@ -28,13 +28,13 @@ Item {
 
     Text {
         id: title
-        text: qsTr("Danh Sach Phat")
+        text: qsTr("MUSIC LIST")
         anchors {
             horizontalCenter: root.horizontalCenter
             top: root.top
-            topMargin: 20
+            topMargin: 25
         }
-        font.pixelSize: 20
+        font.pixelSize: 25
         font.bold: true
     }
 
