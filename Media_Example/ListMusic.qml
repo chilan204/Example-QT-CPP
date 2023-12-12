@@ -6,20 +6,6 @@ Item {
     height: 450
     clip: true
 
-    property var listMs: [
-        "Nang tho",
-        "Thang tu la noi doi cua em - Ha Anh Tuan",
-        "Suyt nua thi",
-        "Va ngay nao do",
-        "Con mo bang gia",
-        "Hoa tan tinh tan",
-        "Ben tren tang lau",
-        "Cat doi noi sau"
-    ]
-
-    property string currentMusic: listMs[root.currentIndex]
-    property int currentIndex
-
     Rectangle {
         id: background
         width: 410
@@ -30,10 +16,10 @@ Item {
 
     ListView {
         anchors.fill: background
-        model: listMs
+        model: CTRL.getListMS().length
         delegate: ItemMusic {
-            nameMusic: listMs[index]
-            isCurrent: root.currentIndex == index
+            nameMusic: CTRL.getListMS()[index]
+            isCurrent: CTRL.currentIndex == index
         }
     }
 

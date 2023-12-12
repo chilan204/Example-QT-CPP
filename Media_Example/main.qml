@@ -8,8 +8,6 @@ Window {
     height: 730
     title: qsTr("Media Player")
 
-    property bool isPlay: false
-
     Rectangle {
         id: background
         width: 420
@@ -59,8 +57,6 @@ Window {
             topMargin: 80
             left: background.left
         }
-        currentMusic: listMusic.currentMusic
-        isPlaying: playMusic.isPlaying
     }
 
     PlayMusic {
@@ -78,8 +74,6 @@ Window {
             topMargin: 80
             horizontalCenter: background.horizontalCenter
         }
-        currentIndex: playMusic.currentIndex
         visible: false
     }
-
 }

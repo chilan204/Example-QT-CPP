@@ -6,8 +6,7 @@ Item {
     width: 420
     height: 450
 
-    property string currentMusic
-    property bool isPlaying
+    property int currentIndex: CTRL.currentIndex
 
     Rectangle {
         id: mask
@@ -40,7 +39,7 @@ Item {
     Text {
         id: name
         width: 380
-        text: root.currentMusic
+        text: CTRL.getListMS()[root.currentIndex]
         font.pixelSize: 25
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -60,6 +59,9 @@ Item {
         to: 360 + imgSong.rotation
         direction: RotationAnimation.Clockwise
         duration: 6000
-        running: root.isPlaying
+        running: CTRL.isPlaying
     }
+
+    onCurrentIndexChanged: name.text = CTRL.getListMS()[root.currentIndex]
+
 }
