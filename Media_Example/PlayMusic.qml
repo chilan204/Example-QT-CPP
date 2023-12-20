@@ -30,7 +30,7 @@ Item {
         }
 
         onWidthChanged: {
-            if (position.width >= 358) {
+            if (position.width >= 359) {
                 CTRL.next()
             }
         }
@@ -64,6 +64,7 @@ Item {
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
+                PLAYMS.play
                 CTRL.setIsPlaying(!CTRL.isPlaying)
                 CTRL.isPlaying ? positionAni.resume() : positionAni.pause()
             }

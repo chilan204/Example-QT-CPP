@@ -2,6 +2,10 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <QDir>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QUrl>
 
 class controller : public QObject
 {
