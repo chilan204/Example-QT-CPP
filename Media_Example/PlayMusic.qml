@@ -28,12 +28,6 @@ Item {
             left: duration.left
             verticalCenter: duration.verticalCenter
         }
-
-        onWidthChanged: {
-            if (position.width >= 359) {
-                CTRL.next()
-            }
-        }
     }
 
     Rectangle {
@@ -64,9 +58,8 @@ Item {
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
-                PLAYMS.play
-                CTRL.setIsPlaying(!CTRL.isPlaying)
-                CTRL.isPlaying ? positionAni.resume() : positionAni.pause()
+                CTRL.isPlaying ? CTRL.pause() : CTRL.play()
+                positionAni.start()
             }
         }
         function sourceImg(){
@@ -124,10 +117,8 @@ Item {
         property: "width"
         from: 0
         to: 360
-        duration: 6000
+        duration: CTRL.duration
         running: true
         loops: Animation.Infinite
     }
-
-
 }
