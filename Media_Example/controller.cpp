@@ -2,14 +2,19 @@
 
 controller::controller()
 {
-    m_listMS.push_back("Nang tho");
-    m_listMS.push_back("Thang tu la noi doi cua em - Ha Anh Tuan");
-    m_listMS.push_back("Suyt nua thi");
-    m_listMS.push_back("Va ngay nao do");
-    m_listMS.push_back("Con mo bang gia");
-    m_listMS.push_back("Hoa tan tinh tan");
-    m_listMS.push_back("Ben tren tang lau");
-    m_listMS.push_back("Cat doi noi sau");
+    m_path = "/home/nct/NCL/Example-QT-CPP/Media_Example/Music";
+
+    QDir directory(m_path);
+    QStringList mp3Files = directory.entryList(QStringList() << "*.mp3", QDir::Files);
+    QMediaPlaylist *m_listMS = new QMediaPlaylist();
+    foreach (QString mp3File, mp3Files) {
+        qDebug() << mp3File;
+        QUrl fileUrl = QUrl::fromLocalFile(directory.filePath(mp3File));
+        m_listMS->addMedia(fileUrl);
+    }
+    QMediaPlayer *player = new QMediaPlayer();
+    player->setPlaylist(m_listMS);
+    player->play();
 
     m_isPlaying = true;
 }
@@ -52,7 +57,20 @@ void controller::pre()
     emit currentIndexChanged();
 }
 
-QList<QString> controller::getListMS()
+void controller::play(bool isPlaying)
+{
+    m_isPlaying = !isPlaying;
+    emit isPlayingChanged();
+}
+
+void controller::pause()
+{
+//    if (m_currentIndex == m_listMS.length()-1){m_currentIndex = 0;}
+//    else {m_currentIndex += 1;}
+//    emit currentIndexChanged();
+}
+
+QStringList controller::getListMS()
 {
     return m_listMS;
 }

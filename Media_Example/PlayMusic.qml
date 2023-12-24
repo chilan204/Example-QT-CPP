@@ -64,7 +64,6 @@ Item {
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
-                PLAYMS.play
                 CTRL.setIsPlaying(!CTRL.isPlaying)
                 CTRL.isPlaying ? positionAni.resume() : positionAni.pause()
             }
@@ -128,6 +127,4 @@ Item {
         running: true
         loops: Animation.Infinite
     }
-
-
 }

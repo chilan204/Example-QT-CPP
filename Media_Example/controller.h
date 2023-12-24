@@ -5,7 +5,6 @@
 #include <QDir>
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
-#include <QUrl>
 
 class controller : public QObject
 {
@@ -15,6 +14,7 @@ class controller : public QObject
 
 public:
     controller();
+    QMediaPlayer *player();
 
     int currentIndex();
     Q_INVOKABLE void setCurrentIndex(int index);
@@ -24,7 +24,9 @@ public:
 
     Q_INVOKABLE void next();
     Q_INVOKABLE void pre();
-    Q_INVOKABLE QList <QString> getListMS();
+    Q_INVOKABLE void play(bool);
+    Q_INVOKABLE void pause();
+    Q_INVOKABLE QStringList getListMS();
 
 signals:
     void currentIndexChanged();
@@ -32,6 +34,7 @@ signals:
 
 private:
     QList <QString> m_listMS;
+    QString m_path;
     int m_currentIndex;
     bool m_isPlaying;
 };
