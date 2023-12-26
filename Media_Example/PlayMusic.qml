@@ -20,7 +20,7 @@ Item {
 
     Rectangle {
         id: position
-        width: 0
+        width: 360 * CTRL.position / CTRL.duration
         height: 6
         radius: 5
         color: "cyan"
@@ -28,11 +28,10 @@ Item {
             left: duration.left
             verticalCenter: duration.verticalCenter
         }
-
-        onWidthChanged: {
-            if (position.width >= 359) {
-                CTRL.next()
-            }
+        MouseArea {
+            anchors.fill: parent
+            onPressed: parent.scale = 0.7
+            onReleased: parent.scale = 1
         }
     }
 
@@ -53,8 +52,8 @@ Item {
         id: playButton
         anchors {
             horizontalCenter: parent.horizontalCenter
-            top: duration.bottom
-            topMargin: 50
+            top: dur.bottom
+            topMargin: 25
         }
         source: playButton.sourceImg()
         sourceSize.width: 50
@@ -64,8 +63,7 @@ Item {
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
-                CTRL.setIsPlaying(!CTRL.isPlaying)
-                CTRL.isPlaying ? positionAni.resume() : positionAni.pause()
+                CTRL.isPlaying ? CTRL.pause() : CTRL.resume()
             }
         }
         function sourceImg(){
@@ -89,8 +87,6 @@ Item {
             onReleased: parent.scale = 1
             onClicked: {
                 CTRL.next()
-                positionAni.restart()
-                if ( !CTRL.isPlaying ) positionAni.pause()
             }
         }
     }
@@ -111,20 +107,31 @@ Item {
             onReleased: parent.scale = 1
             onClicked: {
                 CTRL.pre()
-                positionAni.restart()
-                if ( !CTRL.isPlaying ) positionAni.pause()
             }
         }
     }
 
-    NumberAnimation {
-        id: positionAni
-        target: position
-        property: "width"
-        from: 0
-        to: 360
-        duration: 6000
-        running: true
-        loops: Animation.Infinite
+    Text {
+        id: dur
+        text: qsTr( Math.floor(CTRL.duration / 60000) + ":" + Math.floor((CTRL.duration % 60000) / 1000))
+        font.pixelSize: 20
+        anchors {
+            top: duration.bottom
+            topMargin: 10
+            right: parent.right
+            rightMargin: 25
+        }
+    }
+
+    Text {
+        id: pos
+        text: qsTr( Math.floor(CTRL.position / 60000) + ":" + Math.floor((CTRL.position % 60000) / 1000))
+        font.pixelSize: 20
+        anchors {
+            top: duration.bottom
+            topMargin: 10
+            left: parent.left
+            leftMargin: 25
+        }
     }
 }
