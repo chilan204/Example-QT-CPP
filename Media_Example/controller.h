@@ -10,10 +10,10 @@
 class controller : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
-    Q_PROPERTY(bool isPlaying READ isPlaying WRITE setIsPlaying NOTIFY isPlayingChanged)
-    Q_PROPERTY(int duration READ duration WRITE setDuration NOTIFY durationChanged)
-    Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(int currentIndex     READ currentIndex   WRITE setCurrentIndex   NOTIFY currentIndexChanged)
+    Q_PROPERTY(bool isPlaying       READ isPlaying      WRITE setIsPlaying      NOTIFY isPlayingChanged)
+    Q_PROPERTY(int duration         READ duration       WRITE setDuration       NOTIFY durationChanged)
+    Q_PROPERTY(int position         READ position       WRITE setPosition       NOTIFY positionChanged)
 
 public:
     controller();
@@ -36,7 +36,7 @@ public:
     Q_INVOKABLE void pre();
     Q_INVOKABLE void play();
     Q_INVOKABLE void pause();
-    Q_INVOKABLE void resume();
+    Q_INVOKABLE void selectSong();
     Q_INVOKABLE QStringList getListMS();
 
 public slots:
@@ -50,11 +50,11 @@ signals:
 
 
 private:
+    QMediaPlayer m_player;
+    QStringList m_listMS;
     QTimer m_timer;
     int m_duration;
     int m_position;
-    QMediaPlayer m_player;
-    QStringList m_listMS;
     int m_currentIndex;
     bool m_isPlaying;
 };
