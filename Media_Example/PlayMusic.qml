@@ -28,11 +28,6 @@ Item {
             left: duration.left
             verticalCenter: duration.verticalCenter
         }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: parent.scale = 0.7
-            onReleased: parent.scale = 1
-        }
     }
 
     Rectangle {
@@ -45,6 +40,19 @@ Item {
             verticalCenter: position.verticalCenter
             left: position.right
             leftMargin: -8
+        }
+        MouseArea {
+            anchors.fill: parent
+            onPressed: parent.scale = 0.7
+            onReleased: parent.scale = 1
+            drag.target: parent
+        }
+
+        Component.onCompleted: update()
+        onXChanged: update()
+
+        function update() {
+            console.log(x)
         }
     }
 
