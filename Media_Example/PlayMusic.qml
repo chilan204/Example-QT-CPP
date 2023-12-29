@@ -68,11 +68,11 @@ Item {
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
-                CTRL.isPlaying ? CTRL.pause() : CTRL.resume()
+                CTRL.isPlaying ? CTRL.pause() : CTRL.play()
             }
         }
         function sourceImg(){
-            return "qrc:/img/" + (CTRL.isPlaying ? "img_play.png" : "img_pause.png")
+            return "qrc:/img/" + (CTRL.isPlaying ? "img_pause.png" : "img_play.png")
         }
     }
 

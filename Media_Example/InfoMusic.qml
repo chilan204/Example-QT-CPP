@@ -58,7 +58,7 @@ Item {
         from: imgSong.rotation
         to: 360 + imgSong.rotation
         direction: RotationAnimation.Clockwise
-        duration: 6000
+        duration: 60000
         running: CTRL.isPlaying
     }
 

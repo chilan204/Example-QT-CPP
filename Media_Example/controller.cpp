@@ -1,6 +1,7 @@
 #include "controller.h"
 
-#define PATH_LOCAL "/home/nct/NCL/Example-QT-CPP/Media_Example/Music"
+//#define PATH_LOCAL "/home/nct/NCL/Example-QT-CPP/Media_Example/Music"
+#define PATH_LOCAL "/home/nct/NCL/NCL_Example/Media_Example/Music"
 
 controller::controller()
 {
@@ -11,8 +12,7 @@ controller::controller()
     m_timer.start(1000);
 
     m_currentIndex = 0;
-    play();
-    pause();
+    m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
     m_isPlaying = false;
 }
 
@@ -71,6 +71,7 @@ void controller::next()
 {
     if (m_currentIndex == m_listMS.length()-1){m_currentIndex = 0;}
     else {m_currentIndex += 1;}
+    m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
     play();
     emit currentIndexChanged();
 }
@@ -79,13 +80,13 @@ void controller::pre()
 {
     if (m_currentIndex == 0){m_currentIndex = m_listMS.length()-1;}
     else {m_currentIndex -= 1;}
+    m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
     play();
     emit currentIndexChanged();
 }
 
 void controller::play()
 {
-    m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
     m_player.play();
     setIsPlaying(true);
 }
@@ -96,10 +97,9 @@ void controller::pause()
     setIsPlaying(false);
 }
 
-void controller::resume()
+void controller::selectSong()
 {
-    m_player.play();
-    setIsPlaying(true);
+
 }
 
 QStringList controller::getListMS()
@@ -111,5 +111,9 @@ void controller::onTimeout()
 {
     setDuration(m_player.duration());
     setPosition(m_player.position());
-    if (m_isPlaying == true && m_position >= m_duration) next();
+    if (m_isPlaying == true && m_position >= m_duration) {
+        next();
+        setDuration(m_player.duration());
+        setPosition(m_player.position());
+    }
 }
