@@ -18,9 +18,6 @@ class controller : public QObject
 public:
     controller();
 
-    int formatMinute(int minute);
-    int formatSecond(int second);
-
     int currentIndex();
     void setCurrentIndex(int index);
 
@@ -32,6 +29,8 @@ public:
 
     int position();
     void setPosition(int position);
+
+    Q_INVOKABLE void setPositionfromUI(double pos);
 
     Q_INVOKABLE void next();
     Q_INVOKABLE void pre();
@@ -56,7 +55,6 @@ private:
     int m_position;
     QMediaPlayer m_player;
     QStringList m_listMS;
-    QString m_path;
     int m_currentIndex;
     bool m_isPlaying;
 };

@@ -1,10 +1,10 @@
 #include "controller.h"
 
+#define PATH_LOCAL "/home/nct/NCL/Example-QT-CPP/Media_Example/Music"
+
 controller::controller()
 {
-    m_path = "/home/nct/NCL/Example-QT-CPP/Media_Example/Music";
-
-    QDir directory(m_path);
+    QDir directory(PATH_LOCAL);
     m_listMS = directory.entryList(QStringList() << "*.mp3", QDir::Files);
 
     connect(&m_timer, &QTimer::timeout, this, &controller::onTimeout);
@@ -14,16 +14,6 @@ controller::controller()
     play();
     pause();
     m_isPlaying = false;
-}
-
-int controller::formatMinute(int minute)
-{
-    return minute / 60000;
-}
-
-int controller::formatSecond(int second)
-{
-    return (second % 60000) / 1000;
 }
 
 int controller::currentIndex()
@@ -72,6 +62,11 @@ void controller::setPosition(int position)
     emit positionChanged();
 }
 
+void controller::setPositionfromUI(double pos)
+{
+    m_player.setPosition(pos * m_player.duration());
+}
+
 void controller::next()
 {
     if (m_currentIndex == m_listMS.length()-1){m_currentIndex = 0;}
@@ -90,7 +85,7 @@ void controller::pre()
 
 void controller::play()
 {
-    m_player.setMedia(QUrl::fromLocalFile(m_path + "/" + m_listMS[currentIndex()]));
+    m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
     m_player.play();
     setIsPlaying(true);
 }

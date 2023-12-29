@@ -20,7 +20,7 @@ Item {
 
     Rectangle {
         id: position
-        width: 360 * CTRL.position / CTRL.duration
+        width: time.x - (30 - time.width / 2)
         height: 6
         radius: 5
         color: "cyan"
@@ -32,27 +32,24 @@ Item {
 
     Rectangle {
         id: time
-        width: 16
-        height: 16
-        radius: 8
+        x: 30 - time.width / 2 + (CTRL.duration == 0 ? 0 : duration.width * CTRL.position / CTRL.duration)
+        width: 20
+        height: 20
+        radius: 10
         color: "cyan"
-        anchors{
-            verticalCenter: position.verticalCenter
-            left: position.right
-            leftMargin: -8
-        }
+        border.color: "white"
+        border.width: 2
+        anchors.verticalCenter: position.verticalCenter
         MouseArea {
             anchors.fill: parent
             onPressed: parent.scale = 0.7
-            onReleased: parent.scale = 1
+            onReleased: {
+                parent.scale = 1
+                CTRL.setPositionfromUI((time.x - (30 - time.width / 2)) / duration.width)
+            }
             drag.target: parent
-        }
-
-        Component.onCompleted: update()
-        onXChanged: update()
-
-        function update() {
-            console.log(x)
+            drag.minimumX: 30 - time.width / 2
+            drag.maximumX: 30 - time.width / 2 + duration.width
         }
     }
 
@@ -121,7 +118,7 @@ Item {
 
     Text {
         id: dur
-        text: qsTr( Math.floor(CTRL.duration / 60000) + ":" + Math.floor((CTRL.duration % 60000) / 1000))
+        text: formatTime(CTRL.duration)
         font.pixelSize: 20
         anchors {
             top: duration.bottom
@@ -133,7 +130,7 @@ Item {
 
     Text {
         id: pos
-        text: qsTr( Math.floor(CTRL.position / 60000) + ":" + Math.floor((CTRL.position % 60000) / 1000))
+        text: formatTime(CTRL.position)
         font.pixelSize: 20
         anchors {
             top: duration.bottom
@@ -142,4 +139,12 @@ Item {
             leftMargin: 25
         }
     }
+
+    function formatTime(seconds) {
+            var date = new Date(null)
+            date.setSeconds(seconds/1000)
+            if(seconds >= 3600 * 1000)
+                return date.toISOString().substr(11, 8)
+            return date.toISOString().substr(14, 5)
+        }
 }
