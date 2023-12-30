@@ -12,5 +12,7 @@
         <file>ItemMusic.qml</file>
         <file>InfoMusic.qml</file>
         <file>PlayMusic.qml</file>
+        <file>img/img_repeat.png</file>
+        <file>img/img_shuffle.png</file>
     </qresource>
 </RCC>

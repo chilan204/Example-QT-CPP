@@ -1,7 +1,7 @@
 #include "controller.h"
 
-//#define PATH_LOCAL "/home/nct/NCL/Example-QT-CPP/Media_Example/Music"
-#define PATH_LOCAL "/home/nct/NCL/NCL_Example/Media_Example/Music"
+#define PATH_LOCAL "/home/nct/NCL/Example-QT-CPP/Media_Example/Music"
+//#define PATH_LOCAL "/home/nct/NCL/NCL_Example/Media_Example/Music"
 
 controller::controller()
 {
@@ -14,6 +14,8 @@ controller::controller()
     m_currentIndex = 0;
     m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
     m_isPlaying = false;
+    m_isRepeat = false;
+    m_isShuffle = false;
 }
 
 int controller::currentIndex()
@@ -39,6 +41,31 @@ void controller::setIsPlaying(bool isPlaying)
     m_isPlaying = isPlaying;
     emit isPlayingChanged();
 }
+
+bool controller::isRepeat()
+{
+    return m_isRepeat;
+}
+
+void controller::setIsRepeat(bool isRepeat)
+{
+    if (m_isRepeat == isRepeat) return;
+    m_isRepeat = isRepeat;
+    emit isRepeatChanged();
+}
+
+bool controller::isShuffle()
+{
+    return m_isShuffle;
+}
+
+void controller::setIsShuffle(bool isShuffle)
+{
+    if (m_isShuffle == isShuffle) return;
+    m_isShuffle = isShuffle;
+    emit isShuffleChanged();
+}
+
 
 int controller::duration()
 {
@@ -97,9 +124,11 @@ void controller::pause()
     setIsPlaying(false);
 }
 
-void controller::selectSong()
+void controller::selectSong(int index)
 {
-
+    setCurrentIndex(index);
+    m_player.setMedia(QUrl::fromLocalFile(PATH_LOCAL + QString("/") + m_listMS[currentIndex()]));
+    play();
 }
 
 QStringList controller::getListMS()
@@ -111,8 +140,20 @@ void controller::onTimeout()
 {
     setDuration(m_player.duration());
     setPosition(m_player.position());
-    if (m_isPlaying == true && m_position >= m_duration) {
-        next();
+    if (m_isPlaying && m_position >= m_duration) {
+        if (m_isRepeat) {
+            play();
+        }
+        else if (m_isShuffle) {
+            int index;
+            do {
+                index = QRandomGenerator::global()->bounded(0, m_listMS.length());
+            } while (index == m_currentIndex);
+            selectSong(index);
+        }
+        else {
+            next();
+        }
         setDuration(m_player.duration());
         setPosition(m_player.position());
     }

@@ -20,6 +20,14 @@ Item {
         delegate: ItemMusic {
             nameMusic: CTRL.getListMS()[index]
             isCurrent: CTRL.currentIndex == index
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    CTRL.selectSong(index)
+                    root.visible = false
+                }
+            }
         }
     }
 

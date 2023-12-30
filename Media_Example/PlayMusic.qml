@@ -60,9 +60,9 @@ Item {
             top: dur.bottom
             topMargin: 25
         }
-        source: playButton.sourceImg()
-        sourceSize.width: 50
-        sourceSize.height: 50
+        source: "qrc:/img/" + (CTRL.isPlaying ? "img_pause.png" : "img_play.png")
+        sourceSize.width: 40
+        sourceSize.height: 40
         MouseArea {
             anchors.fill: parent
             onPressed: parent.scale = 0.7
@@ -71,9 +71,6 @@ Item {
                 CTRL.isPlaying ? CTRL.pause() : CTRL.play()
             }
         }
-        function sourceImg(){
-            return "qrc:/img/" + (CTRL.isPlaying ? "img_pause.png" : "img_play.png")
-        }
     }
 
     Image {
@@ -81,11 +78,11 @@ Item {
         anchors {
             top: playButton.top
             left: playButton.right
-            leftMargin: 50
+            leftMargin: 40
         }
         source: "qrc:/img/img_next.png"
-        sourceSize.width: 50
-        sourceSize.height: 50
+        sourceSize.width: 40
+        sourceSize.height: 40
         MouseArea {
             anchors.fill: parent
             onPressed: parent.scale = 0.7
@@ -101,17 +98,59 @@ Item {
         anchors {
             top: playButton.top
             right: playButton.left
-            rightMargin: 50
+            rightMargin: 40
         }
         source: "qrc:/img/img_previous.png"
-        sourceSize.width: 50
-        sourceSize.height: 50
+        sourceSize.width: 40
+        sourceSize.height: 40
         MouseArea {
             anchors.fill: parent
             onPressed: parent.scale = 0.7
             onReleased: parent.scale = 1
             onClicked: {
                 CTRL.pre()
+            }
+        }
+    }
+
+    Image {
+        id: repeatButton
+        anchors {
+            top: playButton.top
+            left: nextButton.right
+            leftMargin: 40
+        }
+        source: "qrc:/img/img_repeat.png"
+        sourceSize.width: 40
+        sourceSize.height: 40
+        opacity: CTRL.isRepeat ? 1 : 0.3
+        MouseArea {
+            anchors.fill: parent
+            onPressed: parent.scale = 0.7
+            onReleased: parent.scale = 1
+            onClicked: {
+                CTRL.setIsRepeat(!CTRL.isRepeat)
+            }
+        }
+    }
+
+    Image {
+        id: shuffleButton
+        anchors {
+            top: playButton.top
+            right: preButton.left
+            rightMargin: 40
+        }
+        source: "qrc:/img/img_shuffle.png"
+        sourceSize.width: 40
+        sourceSize.height: 40
+        opacity: CTRL.isShuffle ? 1 : 0.3
+        MouseArea {
+            anchors.fill: parent
+            onPressed: parent.scale = 0.7
+            onReleased: parent.scale = 1
+            onClicked: {
+                CTRL.setIsShuffle(!CTRL.isShuffle)
             }
         }
     }
